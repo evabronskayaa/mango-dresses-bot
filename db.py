@@ -25,7 +25,7 @@ class Favorites(BaseModel):
     chatid = CharField()
 
 
-def find_all_cards():
+def find_all_stuff():
     return Dress.select()
 
 
