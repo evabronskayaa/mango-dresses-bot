@@ -4,7 +4,7 @@ from db import find_all_search, process_all_stuff
 
 
 class AllStuffParsing:
-    def __init__(self, url, bot=None):
+    def __init__(self, url, bot):
         self.driver = webdriver.Chrome(executable_path=DRIVER_PATH)
         self.driver.minimize_window()
         self.url = url
