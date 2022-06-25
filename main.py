@@ -8,11 +8,13 @@ from aiogram.types import ParseMode
 
 from db import process_search_model, init_db, find_id_search, find_all_stuff
 from config import URL, TOKEN
+from parser1 import AllStuffParsing
 import ui.buttons as b
 import ui.slash_commands as slash
 
 # r = requests.get(URL)
 # print(r.status_code)
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -35,7 +37,8 @@ async def send_help(message: types.Message):
                    f'/search - ???\n'
     await message.answer(text=message_text)
 
-@dp.message_handler(commands='about')
+
+@dp.message_handler(commands='contact')
 async def send_link(message: types.Message):
     buttons = [
         types.InlineKeyboardButton(text="GitHub", url="https://github.com/evabronskayaa/mango-dresses-bot"),
@@ -44,6 +47,7 @@ async def send_link(message: types.Message):
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(*buttons)
     await message.answer("Our links", reply_markup=keyboard)
+
 
 @dp.message_handler(commands='list')
 async def send_list(message: types.Message):
@@ -71,7 +75,7 @@ async def sent_type(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     buttons = ['All', 'Dresses', 'Jumpsuits']
     keyboard.add(*buttons)
-    await message.answer("Well, let's choose cool looks! Tell me the type of clothes :)", reply_markup=keyboard)
+    await message.answer('Well, let\'s choose cool looks! Tell me the type of clothes :)', reply_markup=keyboard)
 
 
 # @dp.message_handler(Text(equals="All"))
@@ -87,15 +91,16 @@ async def sent_type(message: types.Message):
 # async def echo(message: types.Message):
 #     await process_search_model(message)
 
-async def scheduled(wait_for, parser):
+
+async def scheduled(wait_for, parser1):
     while True:
         await asyncio.sleep(wait_for)
-        # await parser.parse()
+        await parser1.parse()
 
 
 if __name__ == '__main__':
     init_db()
-    # parser = ParseVideoCard(url=URL, bot=bot)
+    parser2 = AllStuffParsing(url=URL, bot=bot)
     loop = asyncio.get_event_loop()
-    loop.create_task(scheduled(10, None))
+    loop.create_task(scheduled(10, parser2))
     executor.start_polling(dp, skip_updates=True)

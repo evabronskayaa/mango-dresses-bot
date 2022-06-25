@@ -21,6 +21,13 @@ class SearchModel(BaseModel):
 
 
 class Favorites(BaseModel):
+    title = CharField()
+    url = TextField()
+    chatid = CharField()
+
+
+class Recommendation(BaseModel):
+    title = CharField()
     url = TextField()
     chatid = CharField()
 
@@ -56,7 +63,7 @@ async def process_search_model(message):
     return search_exist
 
 
-async def process_dress(title, url, chat_id, bot):
+async def process_all_stuff(title, url, chat_id, bot):
     card_exist = True
     try:
         card = Dress.select().where(Dress.title == title).get()
@@ -72,4 +79,4 @@ async def process_dress(title, url, chat_id, bot):
 
 
 def init_db():
-    db.create_tables([Dress, SearchModel])
+    db.create_tables([Dress, SearchModel, Favorites, Recommendation])
