@@ -1,3 +1,6 @@
+import requests
+from selenium.webdriver.common.by import By
+
 from config import DRIVER_PATH, URL
 from selenium import webdriver
 from db import find_all_search, process_all_stuff
@@ -19,9 +22,14 @@ class AllStuffParsing:
         for page in range(1, 5):
             print(self.url.format(page))
             self.driver.get(self.url.format(page))
-            items = len(self.driver.find_elements_by_class_name("ais-Hits-list"))
+            self.driver.implicitly_wait(10)
+
+            # self.driver.find_element(By.ID, "onetrust-accept-btn-handler").click()
+
+
+            items = len(self.driver.find_elements(By.CLASS_NAME, "z252w"))
             for item in range(items):
-                cards = self.driver.find_elements_by_class_name("ais-Hits-item")
+                cards = self.driver.find_elements(By.CLASS_NAME, "yoqzg")
                 for card in cards:
                     card_title = card.find_element(By.CLASS_NAME, "product-name").text
                     card_href = card.find_element(By.CLASS_NAME, "bb1c_").get_attribute('href')
