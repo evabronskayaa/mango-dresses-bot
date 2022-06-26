@@ -23,9 +23,8 @@ class AllStuffParsing:
             for item in range(items):
                 cards = self.driver.find_elements_by_class_name("ais-Hits-item")
                 for card in cards:
-                    product_item = card.find_element_by_class_name("c-productItem__head__name")
-                    card_title = product_item.text
-                    card_href = product_item.get_attribute('href')
+                    card_title = card.find_element(By.CLASS_NAME, "product-name").text
+                    card_href = card.find_element(By.CLASS_NAME, "bb1c_").get_attribute('href')
                     for search_model in search_models:
                         if card_title.find(search_model.title) >= 0:
                             await process_all_stuff(card_title, card_href, search_model.chatid, self.bot)
