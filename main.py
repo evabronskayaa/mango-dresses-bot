@@ -1,8 +1,10 @@
+import datetime
 import logging
 import asyncio
 import requests
 from aiogram.utils.callback_data import CallbackData
 from bs4 import BeautifulSoup as b
+import emoji
 
 from aiogram import Bot, Dispatcher, executor, utils, types
 from aiogram.types import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
@@ -32,6 +34,7 @@ async def send_help(message: types.Message):
                    f'/list -  you get a list of all stuff\n' \
                    f'/search - you get a list of stuff with your filter\n' \
                    f'/type - you get a list of the type of clothing you have selected\n' \
+                   f'/color - choose color of the clothes' \
                    f'/contact - you can contact developers with given links\n'
     await message.answer(text=message_text)
 
@@ -76,6 +79,20 @@ async def send_type(message: types.Message):
     await message.answer('Well, let\'s choose cool looks! Tell me the type of clothes :)', reply_markup=keyboard)
 
 
+@dp.message_handler(commands='color')
+async def send_type(message: types.Message):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = [emoji.emojize(':red_circle:'),
+               emoji.emojize(':orange_circle:'),
+               emoji.emojize(':yellow_circle:'),
+               emoji.emojize(':green_circle:'),
+               emoji.emojize(':blue_circle:'),
+               emoji.emojize(':purple_circle:'),
+               emoji.emojize(':brown_circle:'),
+               emoji.emojize(':black_circle:'),
+               emoji.emojize(':white_circle:')]
+    keyboard.add(*buttons)
+    await message.answer('Well, let\'s choose cool looks! Tell me the type of clothes :)', reply_markup=keyboard)
 # @dp.message_handler(Text(equals="All"))
 # async def get_all(message: types.Message):
 #     await message.reply("")

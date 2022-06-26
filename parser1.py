@@ -26,7 +26,6 @@ class AllStuffParsing:
 
             # self.driver.find_element(By.ID, "onetrust-accept-btn-handler").click()
 
-
             items = len(self.driver.find_elements(By.CLASS_NAME, "z252w"))
             for item in range(items):
                 cards = self.driver.find_elements(By.CLASS_NAME, "yoqzg")
